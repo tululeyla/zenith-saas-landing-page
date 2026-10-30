@@ -26,3 +26,39 @@ faqQuestion.forEach((question)=>{
     }
   })
 })
+
+const billingToggle = document.getElementById("billingToggle");
+const amounts = document.querySelectorAll(".amount");
+const periods = document.querySelectorAll(".period");
+
+billingToggle.addEventListener("change", () => {
+  const isAnnual = billingToggle.checked;
+
+  amounts.forEach((amount) => {
+    if (isAnnual) {
+      amount.textContent = amount.dataset.annual;
+    } else {
+      amount.textContent = amount.dataset.monthly;
+    }
+  });
+
+  periods.forEach((period) => {
+    period.textContent = isAnnual ? " /year" : " /month";
+  });
+});
+
+const hamburger = document.getElementById("hamburger");
+const navMenu = document.getElementById("nav-menu");
+
+hamburger.addEventListener("click", () => {
+  hamburger.classList.toggle("active");
+  navMenu.classList.toggle("active");
+});
+
+// Close menu when a navigation link is clicked
+document.querySelectorAll(".nav-bar a").forEach((link) => {
+  link.addEventListener("click", () => {
+    hamburger.classList.remove("active");
+    navMenu.classList.remove("active");
+  });
+});

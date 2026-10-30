@@ -303,53 +303,97 @@ a {
   padding: 100px 20px;
   background-color: #f8fafc;
 }
-
+.pricing-section .section-header {
+  margin-bottom: 24px;
+}
 .pricing-container {
   max-width: 1200px;
   margin: 0 auto;
   text-align: center;
 }
 
-/* Billing Toggle Switch */
-.toggle {
+/* Pricing Toggle Switch */
+.toggle-container {
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 12px;
-  margin: 24px 0 48px;
-  font-size: 1rem;
+  justify-content: center;
+  gap: 16px;
+  margin: 16px 0 64px;
+}
+
+.toggle-label {
+  font-weight: 600;
   color: #475569;
+  font-size: 1rem;
 }
 
-.toggle input[type="checkbox"] {
-  width: 44px;
-  height: 24px;
-  accent-color: #2563eb;
-  cursor: pointer;
-}
-
-.toggle span {
+.discount-badge {
   background-color: #dbeafe;
   color: #1e40af;
   font-size: 0.75rem;
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 12px;
-  margin-left: 4px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-left: 6px;
+}
+
+/* Custom Toggle Switch (iOS style) */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 28px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #cbd5e1;
+  transition: 0.3s ease;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.3s ease;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2563eb;
+}
+
+input:checked + .slider:before {
+  transform: translateX(24px);
 }
 
 /* Pricing Grid */
+/* Pricing Grid - Fixed to 3 clean columns like features */
 .pricing-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 30px;
   align-items: stretch;
+  padding-top: 20px; /* Gives space so the floating badge never gets clipped */
 }
 
 /* Individual Card Styling */
 .pricing-card {
   background-color: #ffffff;
-  border-radius: 12px;
+  border-radius: 16px; /* Slightly more rounded for modern SaaS look */
   border: 1px solid #e2e8f0;
   display: flex;
   flex-direction: column;
@@ -361,28 +405,34 @@ a {
 
 .pricing-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
 }
 
-/* Featured / Popular Card */
+/* Featured / Popular Card - Subtly elevated to draw the eye */
 .pricing-card.featured {
   border: 2px solid #2563eb;
-  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.1);
+  transform: scale(1.03); /* Pops out slightly larger than the others */
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.15);
+}
+
+.pricing-card.featured:hover {
+  transform: scale(1.03) translateY(-5px); /* Maintains scale on hover */
 }
 
 .pricing-card .badge {
   position: absolute;
-  top: -12px;
+  top: -14px;
   left: 50%;
   transform: translateX(-50%);
   background-color: #2563eb;
   color: #ffffff;
   font-size: 0.75rem;
   font-weight: 600;
-  padding: 4px 12px;
+  padding: 4px 14px;
   border-radius: 20px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
 }
 
 /* Card Typography */
@@ -563,7 +613,7 @@ textarea:focus {
  font-weight: 500;
 }
 .footer {
-  background-color: #0f172a; /* Deep slate background for high contrast */
+  background-color: #0f172a;
   color: #94a3b8;
   padding: 80px 20px 30px;
 }
@@ -633,4 +683,135 @@ textarea:focus {
   padding-top: 30px;
   text-align: center;
   font-size: 0.875rem;
+}
+html {
+  scroll-behavior: smooth;
+}
+/* Hide hamburger icon by default on desktop */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.hamburger .bar {
+  height: 3px;
+  width: 100%;
+  background-color: #0f172a;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+  
+/* ==========================================
+   TABLET RESPONSIVENESS (Max Width: 1024px)
+   ========================================== */
+@media (max-width: 1024px) {
+  /* Pricing Grid: Scale back the desktop pop-out effect to prevent overflow */
+  .pricing-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .pricing-card.featured {
+    transform: none; /* Disables scale up on smaller screens so cards align neatly */
+  }
+
+  .pricing-card.featured:hover {
+    transform: translateY(-5px);
+  }
+}
+
+/* ==========================================
+   MOBILE RESPONSIVENESS (Max Width: 768px)
+   ========================================== */
+@media (max-width: 768px) {
+  /* 1. Header & Navigation */
+  
+  .hamburger {
+    display: flex; /* Displays hamburger button on mobile screens */
+  }
+
+  .nav-bar {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 24px 0;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    
+    /* Hidden state */
+    display: none;
+  }
+
+  /* Active class toggled by JS */
+  .nav-bar.active {
+    display: flex;
+  }
+
+  /* Hamburger to "X" animation when opened */
+  .hamburger.active .bar:nth-child(1) {
+    transform: translateY(7.5px) rotate(45deg);
+  }
+  .hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.active .bar:nth-child(3) {
+    transform: translateY(-7.5px) rotate(-45deg);
+  }
+
+
+  .nav-bar {
+    gap: 20px;
+  }
+
+  /* 2. Hero Section */
+  .hero-section {
+    padding: 60px 16px;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem; /* Reduces headline font size to prevent awkward text wrapping */
+  }
+
+  .hero-cta {
+    flex-direction: column; /* Stacks CTA buttons vertically on small screens */
+    width: 100%;
+  }
+
+  .hero-cta .btn {
+    width: 100%;
+  }
+
+  .mockup-body {
+    grid-template-columns: 1fr; /* Stacks hero dashboard stat cards */
+  }
+
+  /* 3. Features & Pricing Grids */
+  .features-grid,
+  .pricing-grid {
+    grid-template-columns: 1fr; /* Collapses 3 columns down to 1 single column */
+    gap: 24px;
+  }
+
+  /* 4. Footer Layout */
+  .footer-top {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .footer-links-group {
+    flex-direction: column;
+    gap: 24px;
+  }
 }
